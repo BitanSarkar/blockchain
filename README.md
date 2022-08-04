@@ -13,3 +13,21 @@ https://www.superdatascience.com/blockchain/
     > - https://tools.superdatascience.com/blockchain/hash/
     >
     > - Read Blockchain Intuition/CrypCont.pdf
+
+3. Immutable Ledger
+    > - Read https://medium.com/cryptoeconomics-australia/the-blockchain-economy-a-beginners-guide-to-institutional-cryptoeconomics-64bf2f2beec4
+
+4. Distributed P2P Network
+    > - https://medium.com/@VitalikButerin/the-meaning-of-decentralization-a0c92b76a274
+
+5. Byzantine Fault Tolerance
+    > - Read 1. Blockchain Intuition/The-Weak-Byzantine-Generals-Problem.pdf
+    >
+    > - https://medium.com/loom-network/understanding-blockchain-fundamentals-part-1-byzantine-fault-tolerance-245f46fe8419
+
+6. Consensus Protocol
+    > - https://www.mail-archive.com/cryptography@metzdowd.com/msg09997.html
+    >
+    > - https://www.coindesk.com/markets/2017/03/04/a-short-guide-to-blockchain-consensus-protocols/
+
+
