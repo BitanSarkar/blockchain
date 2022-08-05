@@ -1,11 +1,14 @@
 # Module 1 - create a Blockchain
 
 # import the libraries
+from asyncio.windows_events import NULL
+from cmath import nan
 import datetime as dt
 import hashlib as md
 import http
 import json as js
 from http import HTTPStatus
+from random import randint
 import re
 from flask import Flask, jsonify
 
@@ -45,13 +48,15 @@ class Blockchain:
         return md.sha256(encoded_block).hexdigest()
     
     def is_chain_valid(self, chain) -> bool:
-        for block in chain[1:]:
-            if block["previous_hash"] != self.hash(chain[block.index-1]):
-                return False
-            hash_operation = md.sha256(str(block["proof"]**2-chain[block.index-1]["proof"]**2).encode()).hexdigest()
+        for i in range(1,len(chain)):
+            block = chain[i]
+            previous_block = chain[i-1]
+            if block["previous_hash"] != self.hash(previous_block):
+                return [i, False]
+            hash_operation = md.sha256(str(block["proof"]**4+previous_block["proof"]**2).encode()).hexdigest()
             if not hash_operation.startswith("00000"):
-                return False
-        return True
+                return [i, False]
+        return [-1, True]
 
 # Part 2 - Mining our Blockchain
 
@@ -79,7 +84,7 @@ def mine_block():
     }
     return jsonify(response), HTTPStatus.OK
 
-# Getting the fll Blockchain
+# Getting the full Blockchain
 @app.route('/get_chain', methods=['GET'])
 def get_chain():
     response = {
@@ -88,6 +93,35 @@ def get_chain():
         'timestamp': str(dt.datetime.now().isoformat())
     }
     return jsonify(response), HTTPStatus.OK  if response['length'] > 1 else HTTPStatus.BAD_REQUEST
+
+
+# Check if chain is valid
+@app.route('/is_valid', methods=['GET'])
+def is_valid_chain():
+    [ptr, isValid] = blockchain.is_chain_valid(blockchain.chain)
+    response = {
+        'is_valid': isValid if len(blockchain.chain)>1 else False,
+        'length': len(blockchain.chain),
+        'error_at_index': ptr+1 if not isValid else NULL,
+        'timestamp': str(dt.datetime.now().isoformat())
+    }
+    return jsonify(response), HTTPStatus.OK  if response['length'] > 1 else HTTPStatus.BAD_REQUEST
+
+# Disturb chain
+@app.route('/disturb', methods=['GET'])
+def disturb():
+    previous_block = blockchain.get_previous_block()
+    proof = previous_block["proof"]
+    previous_hash = blockchain.hash(previous_block)
+    block = blockchain.create_block(proof, previous_hash)
+    response = {
+        'message': "Congratulations, you just mined a block",
+        'index': block['index'],
+        'proof': block['proof'],
+        'previous_hash': block['previous_hash'],
+        'timestamp': block['timestamp']
+    }
+    return jsonify(response), HTTPStatus.OK
 
 # Running the app
 app.run(host = '0.0.0.0', port = 5000)
