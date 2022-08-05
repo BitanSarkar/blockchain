@@ -30,4 +30,13 @@ https://www.superdatascience.com/blockchain/
     >
     > - https://www.coindesk.com/markets/2017/03/04/a-short-guide-to-blockchain-consensus-protocols/
 
+## Crytocurrency Intuition
+1. What is Bitcoin?
+    > - It is a protocol that facilitates blockchain.
+    >
+    > - Read : https://www.bitcoin.org/
+    >
+    > - Read : 2a. Crytocurrency Intuition/bitcoin.pdf
 
+2. Bitcoin's Monetary Policy
+    > - 
