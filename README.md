@@ -39,4 +39,40 @@ https://www.superdatascience.com/blockchain/
     > - Read : 2a. Crytocurrency Intuition/bitcoin.pdf
 
 2. Bitcoin's Monetary Policy
+    > - Read https://hackernoon.com/this-time-is-different-part-2-what-bitcoin-really-is-ae58c69b3bf0
+
+3. Understanding Mining Difficulty
+    > - Right now leading 18 zeros, current target
+    >
+    > - Max target which was initially, 8 zeros
+    >
+    > - Difficulty is adjusted every 2 weeks
+
+4. Mining Pools
+    > - Bitcoin mining pool setup, https://blog.bitcoin.org.hk/bitcoin-mining-and-energy-consumption-4526d4b56186
+
+5. Nonce Range
+    > - It is a 32 bit number, thus 1 nonce range is not enough
+    >
+    > - Unix timestamp increases the range to infinite
+
+6. How miners pick Transactions
+    > - Having the highest transaction fee
+    >
+    > - transactions are stored in mempool temporarily before going into a block
+
+7. CPUs vs GPUs vs ASICs
+    > - CPU 10 MH/s uses logic
+    >
+    > - GPU 1000 MH/s uses logic
+    >
+    > - ASIC 1000000 MH/s more specialized in a circuital hardware level to calculate SHA256
+    >
+    > - Cloud mining, using a cloud servers
+    >
+    > - Bitcoin uses SHA256, which is easy to create a circuital hardware to calculate SHA256. but Etherium uses EHash, which is a memory based hashing, which prevents us from creating a circuital hardware because anyway we would need memory support and would increase computational time. In conclusion, Ehash stops people from creating ASICs for Etherium.
+    >
+    > - Read https://www.vijaypradeep.com/blog/2017-04-28-ethereums-memory-hardness-explained/
+
+8. How do Mempools work?
     > - 
