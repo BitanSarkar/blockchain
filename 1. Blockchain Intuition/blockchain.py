@@ -76,7 +76,7 @@ def mine_block():
     previous_hash = blockchain.hash(previous_block)
     block = blockchain.create_block(proof, previous_hash)
     response = {
-        'message': "Congratulations!!! >_< You just ruined the blockchain",
+        'message': "Congratulations, you just mined a block",
         'index': block['index'],
         'proof': block['proof'],
         'previous_hash': block['previous_hash'],
@@ -115,7 +115,7 @@ def disturb():
     previous_hash = blockchain.hash(previous_block)
     block = blockchain.create_block(proof, previous_hash)
     response = {
-        'message': "Congratulations, you just mined a block",
+        'message': "Congratulations!!! >_< You just ruined the blockchain",
         'index': block['index'],
         'proof': block['proof'],
         'previous_hash': block['previous_hash'],
