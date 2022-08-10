@@ -124,4 +124,5 @@ https://www.superdatascience.com/blockchain/
     >
     > - Read https://jimmysong.medium.com/understanding-segwit-block-size-fd901b87c9d4
 
-15. 
+15. Public Keys Vs Bitcoin Address
+    > - 
