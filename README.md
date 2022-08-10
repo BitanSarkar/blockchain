@@ -125,4 +125,12 @@ https://www.superdatascience.com/blockchain/
     > - Read https://jimmysong.medium.com/understanding-segwit-block-size-fd901b87c9d4
 
 15. Public Keys Vs Bitcoin Address
-    > - 
+    > - ![public keys vs bitcoin address](https://github.com/BitanSarkar/blockchain/blob/main/2a.%20Crytocurrency%20Intuition/public_key_vs_bitcoin_address.jpeg?raw=true)
+    >
+    > - Read https://www.reddit.com/r/Bitcoin/comments/3filud/whats_the_difference_between_public_key_and/
+
+16. Hierarchically Deterministic (HD) Wallets
+    > - ![Hierarchically Deterministic Wallet](https://github.com/BitanSarkar/blockchain/blob/main/2a.%20Crytocurrency%20Intuition/HD_wallet.jpg?raw=true)
+    >
+    > - Read [DETERMINISTIC WALLETS, THEIR ADVANTAGES AND THEIR UNDERSTATED FLAWS](https://bitcoinmagazine.com/technical/deterministic-wallets-advantages-flaw-1385450276)
+
