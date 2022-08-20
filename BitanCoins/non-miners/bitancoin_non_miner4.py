@@ -21,36 +21,9 @@ class Blockchain:
         self.utxos = []
         self.transactions = []
         self.nodes = set()
-        self.create_block_init_(previous_hash = '0', id = str(md.sha256("Bitan Sarkar".encode()).hexdigest()))
+        self.create_block(previous_hash = '0', id = str(md.sha256("Bitan Sarkar".encode()).hexdigest()))
     
-    def create_block_init_(self, previous_hash, id):
-        self.transactions.sort(key=lambda transaction: transaction['fees'], reverse=True)
-        check_proof = True
-        ctr = 1
-        sum_total = 0
-        block = {}
-        while check_proof:
-            sum_total = sum([float(0 if transaction['fees'] is None else transaction['fees']) for transaction in self.transactions[0:self.limit]])
-            block = {
-                'index': len(self.chain)+1,
-                'timestamp': str(dt.datetime.now().isoformat()),
-                'nonce': ctr,
-                'transactions': self.transactions[0:self.limit],
-                'previous_hash': previous_hash
-            }
-            if block['index'] > self.prefix_zeros_increment_block_limit:
-                self.prefix_zeros_increment_block_limit = 2*self.prefix_zeros_increment_block_limit
-                self.current_target = self.current_target + '0'
-            if self.hash(block).startswith(self.current_target):
-                check_proof = False
-                self.chain.append(block)
-            ctr += 1
-        self.transactions = self.transactions[self.limit:]
-        self.add_transaction(sender=self.bitancoin_system_id, amount=sum_total*1.05+0.1, reciever=id, fees=sum_total*0.05+0.05)
-        self.replace_chain_decentralized(id)
-        return block
-    
-    async def create_block(self, previous_hash, id):
+    def create_block(self, previous_hash, id):
         self.transactions.sort(key=lambda transaction: transaction['fees'], reverse=True)
         check_proof = True
         ctr = 1
@@ -246,7 +219,7 @@ def isValidNode(address):
 
 # Mining a block
 @app.route('/mine_block', methods=['GET'])
-async def mine_block():
+def mine_block():
     if not isValidNode(request.host_url):  # type: ignore
         return "Invalid host", 401
     global node_address
@@ -254,7 +227,7 @@ async def mine_block():
         node_address = crypto.encrypt(urlparse(request.host_url).netloc, blockchain.secret_key)  # type: ignore
     previous_block = blockchain.get_previous_block()
     previous_hash = blockchain.hash(previous_block)
-    block = await blockchain.create_block(previous_hash, node_address)
+    block = blockchain.create_block(previous_hash, node_address)
     response = {
         'message': "Congratulations, you just mined a block",
         'index': block['index'],
@@ -411,4 +384,4 @@ def get_wallet():
     return jsonify({'public_id': node_address,'wallet_balance': blockchain.get_wallet_balance(node_address)}), 200
 
 # Running the app
-app.run(host = '0.0.0.0', port = 5103)
+app.run(host = '0.0.0.0', port = 5103, threaded=True)

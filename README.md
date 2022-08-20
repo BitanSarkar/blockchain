@@ -135,3 +135,5 @@ https://www.superdatascience.com/blockchain/
     > - Read [DETERMINISTIC WALLETS, THEIR ADVANTAGES AND THEIR UNDERSTATED FLAWS](https://bitcoinmagazine.com/technical/deterministic-wallets-advantages-flaw-1385450276)
 
 ## Part 3 - Smart Contract
+1. What is Etherium
+    > - It is programmable, basic idea is to store codes in each blocks which would be further decentralized. (Kinda like open source code with security) Decentralized super-computer.
