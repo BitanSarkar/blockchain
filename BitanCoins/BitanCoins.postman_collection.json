@@ -1,0 +1,1180 @@
+{
+	"info": {
+		"_postman_id": "50b062eb-ff87-40b6-9045-57cf71dc9905",
+		"name": "BitanCoins",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "miners",
+			"item": [
+				{
+					"name": "miner 1",
+					"item": [
+						{
+							"name": "connect node",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.globals.set(\"neighbour_node1\", JSON.stringify(pm.response.json().your_public_id));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/connect_node",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"connect_node"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "mine block",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/mine_block",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"mine_block"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get all node address",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/get_nodes",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"get_nodes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get wallet balance",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/get_wallet",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"get_wallet"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get bitanCoin blockchain",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/get_chain",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"get_chain"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "add transaction",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"reciever\": \"g+2j6iwwlwNMBsESO98=*t2aonjbnigQV1EhP6I3MhA==*MTSBpEZmHi8WTvt2uXPp8A==*SmepBccrqbvRjq8Pn9BVSw==\",\r\n    \"amount\":1,\r\n    \"fees\": 0.08\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/add_transaction",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"add_transaction"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "miner 2",
+					"item": [
+						{
+							"name": "connect node",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.globals.set(\"neighbour_node2\", JSON.stringify(pm.response.json().your_public_id));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"neighbour_node\": {{neighbour_node1}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5001/connect_node",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5001",
+									"path": [
+										"connect_node"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "mine block",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5001/mine_block",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5001",
+									"path": [
+										"mine_block"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get all node address",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5001/get_nodes",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5001",
+									"path": [
+										"get_nodes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get wallet balance",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5001/get_wallet",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5001",
+									"path": [
+										"get_wallet"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get bitanCoin blockchain",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5001/get_chain",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5001",
+									"path": [
+										"get_chain"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "add transaction",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"reciever\": \"abc\",\r\n    \"amount\": 0.1,\r\n    \"fees\": 0.1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5001/add_transaction",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5001",
+									"path": [
+										"add_transaction"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "miner 3",
+					"item": [
+						{
+							"name": "connect node",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.globals.set(\"neighbour_node3\", JSON.stringify(pm.response.json().your_public_id));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"neighbour_node\": {{neighbour_node1}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5002/connect_node",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5002",
+									"path": [
+										"connect_node"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "mine block",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5002/mine_block",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5002",
+									"path": [
+										"mine_block"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get all node address",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5002/get_nodes",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5002",
+									"path": [
+										"get_nodes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get wallet balance",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5002/get_wallet",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5002",
+									"path": [
+										"get_wallet"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get bitanCoin blockchain",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5002/get_chain",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5002",
+									"path": [
+										"get_chain"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "add transaction",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"reciever\": \"abc\",\r\n    \"amount\": 0.1,\r\n    \"fees\": 0.1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5002/add_transaction",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5002",
+									"path": [
+										"add_transaction"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "non miners",
+			"item": [
+				{
+					"name": "non miner 1",
+					"item": [
+						{
+							"name": "connect node",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"neighbour_node\": {{neighbour_node1}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5100/connect_node",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5100",
+									"path": [
+										"connect_node"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "add transaction",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"reciever\": \"abc\",\r\n    \"amount\": 0.1,\r\n    \"fees\": 0.1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5100/add_transaction",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5100",
+									"path": [
+										"add_transaction"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get all node address",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5100/get_nodes",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5100",
+									"path": [
+										"get_nodes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get wallet balance",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5100/get_wallet",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5100",
+									"path": [
+										"get_wallet"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get bitanCoin blockchain",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5100/get_chain",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5100",
+									"path": [
+										"get_chain"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "non miner 2",
+					"item": [
+						{
+							"name": "connect node",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"neighbour_node\": {{neighbour_node1}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5101/connect_node",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5101",
+									"path": [
+										"connect_node"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "add transaction",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"reciever\": \"abc\",\r\n    \"amount\": 0.1,\r\n    \"fees\": 0.1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5101/add_transaction",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5101",
+									"path": [
+										"add_transaction"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get all node address",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5101/get_nodes",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5101",
+									"path": [
+										"get_nodes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get wallet balance",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5101/get_wallet",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5101",
+									"path": [
+										"get_wallet"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get bitanCoin blockchain",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5101/get_chain",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5101",
+									"path": [
+										"get_chain"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "non miner 3",
+					"item": [
+						{
+							"name": "connect node",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"neighbour_node\": {{neighbour_node2}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5102/connect_node",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5102",
+									"path": [
+										"connect_node"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "add transaction",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"reciever\": \"abc\",\r\n    \"amount\": 0.1,\r\n    \"fees\": 0.1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5102/add_transaction",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5102",
+									"path": [
+										"add_transaction"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get all node address",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5102/get_nodes",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5102",
+									"path": [
+										"get_nodes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get wallet balance",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5102/get_wallet",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5102",
+									"path": [
+										"get_wallet"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get bitanCoin blockchain",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5102/get_chain",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5102",
+									"path": [
+										"get_chain"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "non miner 4",
+					"item": [
+						{
+							"name": "connect node",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"neighbour_node\": {{neighbour_node2}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5103/connect_node",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5103",
+									"path": [
+										"connect_node"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "add transaction",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"reciever\": \"abc\",\r\n    \"amount\": 0.1,\r\n    \"fees\": 0.1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5103/add_transaction",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5103",
+									"path": [
+										"add_transaction"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get all node address",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5103/get_nodes",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5103",
+									"path": [
+										"get_nodes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get wallet balance",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5103/get_wallet",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5103",
+									"path": [
+										"get_wallet"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get bitanCoin blockchain",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5103/get_chain",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5103",
+									"path": [
+										"get_chain"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "non miner 5",
+					"item": [
+						{
+							"name": "connect node",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"neighbour_node\": {{neighbour_node3}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5104/connect_node",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5104",
+									"path": [
+										"connect_node"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "add transaction",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"reciever\": \"abc\",\r\n    \"amount\": 0.1,\r\n    \"fees\": 0.1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5104/add_transaction",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5104",
+									"path": [
+										"add_transaction"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get all node address",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5104/get_nodes",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5104",
+									"path": [
+										"get_nodes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get wallet balance",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5104/get_wallet",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5104",
+									"path": [
+										"get_wallet"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get bitanCoin blockchain",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5104/get_chain",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5104",
+									"path": [
+										"get_chain"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "non miner 6",
+					"item": [
+						{
+							"name": "connect node",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"neighbour_node\": {{neighbour_node3}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5105/connect_node",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5105",
+									"path": [
+										"connect_node"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "add transaction",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"reciever\": \"abc\",\r\n    \"amount\": 0.1,\r\n    \"fees\": 0.1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5105/add_transaction",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5105",
+									"path": [
+										"add_transaction"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get all node address",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5105/get_nodes",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5105",
+									"path": [
+										"get_nodes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get wallet balance",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5105/get_wallet",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5105",
+									"path": [
+										"get_wallet"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get bitanCoin blockchain",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5105/get_chain",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5105",
+									"path": [
+										"get_chain"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
