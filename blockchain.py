@@ -47,7 +47,7 @@ class Blockchain:
         encoded_block = js.dumps(block, sort_keys=True).encode()
         return md.sha256(encoded_block).hexdigest()
     
-    def is_chain_valid(self, chain) -> bool:
+    def is_chain_valid(self, chain) :
         for i in range(1,len(chain)):
             block = chain[i]
             previous_block = chain[i-1]
