@@ -134,3 +134,4 @@ https://www.superdatascience.com/blockchain/
     >
     > - Read [DETERMINISTIC WALLETS, THEIR ADVANTAGES AND THEIR UNDERSTATED FLAWS](https://bitcoinmagazine.com/technical/deterministic-wallets-advantages-flaw-1385450276)
 
+## Part 3 - Smart Contract

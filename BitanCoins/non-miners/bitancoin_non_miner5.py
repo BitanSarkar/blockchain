@@ -1,5 +1,4 @@
 # import the libraries
-from tokenize import Number
 import cryptocode as crypto
 import datetime as dt
 import hashlib as md
@@ -22,9 +21,36 @@ class Blockchain:
         self.utxos = []
         self.transactions = []
         self.nodes = set()
-        self.create_block(previous_hash = '0', id = str(md.sha256("Bitan Sarkar".encode()).hexdigest()))
+        self.create_block_init_(previous_hash = '0', id = str(md.sha256("Bitan Sarkar".encode()).hexdigest()))
     
-    def create_block(self, previous_hash, id):
+    def create_block_init_(self, previous_hash, id):
+        self.transactions.sort(key=lambda transaction: transaction['fees'], reverse=True)
+        check_proof = True
+        ctr = 1
+        sum_total = 0
+        block = {}
+        while check_proof:
+            sum_total = sum([float(0 if transaction['fees'] is None else transaction['fees']) for transaction in self.transactions[0:self.limit]])
+            block = {
+                'index': len(self.chain)+1,
+                'timestamp': str(dt.datetime.now().isoformat()),
+                'nonce': ctr,
+                'transactions': self.transactions[0:self.limit],
+                'previous_hash': previous_hash
+            }
+            if block['index'] > self.prefix_zeros_increment_block_limit:
+                self.prefix_zeros_increment_block_limit = 2*self.prefix_zeros_increment_block_limit
+                self.current_target = self.current_target + '0'
+            if self.hash(block).startswith(self.current_target):
+                check_proof = False
+                self.chain.append(block)
+            ctr += 1
+        self.transactions = self.transactions[self.limit:]
+        self.add_transaction(sender=self.bitancoin_system_id, amount=sum_total*1.05+0.1, reciever=id, fees=sum_total*0.05+0.05)
+        self.replace_chain_decentralized(id)
+        return block
+    
+    async def create_block(self, previous_hash, id):
         self.transactions.sort(key=lambda transaction: transaction['fees'], reverse=True)
         check_proof = True
         ctr = 1
@@ -66,7 +92,7 @@ class Blockchain:
                 return [i, False]
         return [-1, True]
     
-    def add_transaction(self, sender, reciever, amount, fees = 0):
+    def add_transaction(self, sender, reciever, amount, fees = 0.0):
         if fees is None:
             fees = 0
         if amount < 0 or fees < 0:
@@ -154,9 +180,9 @@ class Blockchain:
             longest_chain_transaction = set()
             self_chain_transaction = set()
             for index in range(0, max_length):
-                if self.hash(chain[index]) != self.hash(longest_chain[index]):
+                if self.hash(self.chain[index]) != self.hash(longest_chain[index]):
                     longest_chain_transaction.update([js.dumps(transaction) for transaction in longest_chain[index]['transactions']])
-                    self_chain_transaction.update([js.dumps(transaction) for transaction in chain[index]['transactions']])
+                    self_chain_transaction.update([js.dumps(transaction) for transaction in self.chain[index]['transactions']])
             orphan_transaction = [js.loads(transaction) for transaction in list(self_chain_transaction-longest_chain_transaction)]
             self.transactions.extend(orphan_transaction)
             self.replace_transactions_decentralized(id)
@@ -175,7 +201,7 @@ class Blockchain:
             node_address = js.loads(node)['node_address']
             node_id = js.loads(node)['node_id']
             if node_id != sender:
-                response = rq.post(f'http://{node_address}/update_transactions', json=self.transactions, headers={'Authorization': self.secret_key, 'Content-Type': 'application/json', 'Accept': 'application/json'})
+                rq.post(f'http://{node_address}/update_transactions', json=self.transactions, headers={'Authorization': self.secret_key, 'Content-Type': 'application/json', 'Accept': 'application/json'})
     
     def replace_utxos_decentralized(self, sender):
         network = self.nodes
@@ -220,15 +246,15 @@ def isValidNode(address):
 
 # Mining a block
 @app.route('/mine_block', methods=['GET'])
-def mine_block():
-    if not isValidNode(request.host_url):
+async def mine_block():
+    if not isValidNode(request.host_url):  # type: ignore
         return "Invalid host", 401
     global node_address
     if node_address is None:
-        node_address = crypto.encrypt(urlparse(request.host_url).netloc, blockchain.secret_key)
+        node_address = crypto.encrypt(urlparse(request.host_url).netloc, blockchain.secret_key)  # type: ignore
     previous_block = blockchain.get_previous_block()
     previous_hash = blockchain.hash(previous_block)
-    block = blockchain.create_block(previous_hash, node_address)
+    block = await blockchain.create_block(previous_hash, node_address)
     response = {
         'message': "Congratulations, you just mined a block",
         'index': block['index'],
@@ -242,11 +268,11 @@ def mine_block():
 # Getting the full Blockchain
 @app.route('/get_chain', methods=['GET'])
 def get_chain():
-    if not isValidNode(request.host_url):
+    if not isValidNode(request.host_url):  # type: ignore
         return "Invalid host", 401
     global node_address
     if node_address is None:
-        node_address = crypto.encrypt(urlparse(request.host_url).netloc, blockchain.secret_key)
+        node_address = crypto.encrypt(urlparse(request.host_url).netloc, blockchain.secret_key)  # type: ignore
     response = {
         'chain': blockchain.chain,
         'length': len(blockchain.chain),
@@ -257,11 +283,11 @@ def get_chain():
 # Getting the all UTXOs
 @app.route('/get_all_utxos', methods=['GET'])
 def get_all_utxos():
-    if not isValidNode(request.host_url):
+    if not isValidNode(request.host_url):  # type: ignore
         return "Invalid host", 401
     global node_address
     if node_address is None:
-        node_address = crypto.encrypt(urlparse(request.host_url).netloc, blockchain.secret_key)
+        node_address = crypto.encrypt(urlparse(request.host_url).netloc, blockchain.secret_key)  # type: ignore
     response = {
         'transactions': blockchain.transactions,
         'length': len(blockchain.transactions),
@@ -272,8 +298,8 @@ def get_all_utxos():
 # Update chain
 @app.route('/update_chain', methods=['POST'])
 def update_chain():
-    json = request.get_json(force=True, silent=True, cache=False)
-    auth = request.headers['Authorization']
+    json = request.get_json(force=True, silent=True, cache=False)  # type: ignore
+    auth = request.headers['Authorization']  # type: ignore
     if auth is None and auth is not blockchain.secret_key:
         return jsonify({'message': 'sho sho'}), 401
     blockchain.replace_chain(json)
@@ -282,8 +308,8 @@ def update_chain():
 # Update transactions
 @app.route('/update_transactions', methods=['POST'])
 def update_transactions():
-    json = request.get_json(force=True, silent=True, cache=False)
-    auth = request.headers['Authorization']
+    json = request.get_json(force=True, silent=True, cache=False)  # type: ignore
+    auth = request.headers['Authorization']  # type: ignore
     if auth is None and auth is not blockchain.secret_key:
         return jsonify({'message': 'sho sho'}), 401
     blockchain.replace_transactions(json)
@@ -292,12 +318,12 @@ def update_transactions():
 # Add transaction to block chain
 @app.route('/add_transaction', methods=['POST'])
 def add_transaction():
-    if not isValidNode(request.host_url):
+    if not isValidNode(request.host_url):  # type: ignore
         return "Invalid host", 401
     global node_address
     if node_address is None:
-        node_address = crypto.encrypt(urlparse(request.host_url).netloc, blockchain.secret_key)
-    json = request.get_json(force=True, silent=True, cache=False)
+        node_address = crypto.encrypt(urlparse(request.host_url).netloc, blockchain.secret_key)  # type: ignore
+    json = request.get_json(force=True, silent=True, cache=False)  # type: ignore
     transaction_keys = ['reciever', 'amount']
     if not all (key in json for key in transaction_keys):
         return 'Some elements of transation are missing', 400
@@ -321,12 +347,12 @@ def add_transaction():
 def connect_node():
     global node_address
     if node_address is None:
-        node_address = crypto.encrypt(urlparse(request.host_url).netloc, blockchain.secret_key)
+        node_address = crypto.encrypt(urlparse(request.host_url).netloc, blockchain.secret_key)  # type: ignore
     try:
-        response = request.get_json(force=True, silent=True, cache=False)['neighbour_node']
+        response = request.get_json(force=True, silent=True, cache=False)['neighbour_node']  # type: ignore
     except KeyError as e:
         response = None
-    res = '' if blockchain.add_node(request.host_url, node_address, response) else 'already '
+    res = '' if blockchain.add_node(request.host_url, node_address, response) else 'already '  # type: ignore
     return jsonify({
         'message': f'Your node is {res}connected',
         'your_public_id': node_address
@@ -337,13 +363,13 @@ def connect_node():
 def get_nodes():
     global node_address
     if node_address is None:
-        node_address = crypto.encrypt(urlparse(request.host_url).netloc, blockchain.secret_key)
+        node_address = crypto.encrypt(urlparse(request.host_url).netloc, blockchain.secret_key)  # type: ignore
     return jsonify([js.loads(node)['node_id'] for node in list(blockchain.nodes)]), 200
 
 # Get all nodes
 @app.route('/get_all_nodes', methods=['GET'])
 def get_all_nodes():
-    auth = request.headers['Authorization']
+    auth = request.headers['Authorization']  # type: ignore
     if auth is None and auth is not blockchain.secret_key:
         return jsonify({'message': 'sho sho'}), 401
     return jsonify(list(blockchain.nodes)), 200
@@ -351,16 +377,16 @@ def get_all_nodes():
 # Update all nodes
 @app.route('/update_all_nodes', methods=['POST'])
 def update_all_nodes():
-    auth = request.headers['Authorization']
+    auth = request.headers['Authorization']  # type: ignore
     if auth is None and auth is not blockchain.secret_key:
         return jsonify({'message': 'sho sho'}), 401
-    blockchain.update_nodes(request.get_json(force=True, silent=True, cache=False))
+    blockchain.update_nodes(request.get_json(force=True, silent=True, cache=False))  # type: ignore
     return jsonify({"message":"Success"}), 200
 
 # Get all utxos
 @app.route('/get_utxos', methods=['GET'])
 def get_utxos():
-    auth = request.headers['Authorization']
+    auth = request.headers['Authorization']  # type: ignore
     if auth is None and auth is not blockchain.secret_key:
         return jsonify({'message': 'sho sho'}), 401
     return jsonify([] if blockchain.utxos is None else blockchain.utxos), 200
@@ -368,20 +394,20 @@ def get_utxos():
 # Update all utxos
 @app.route('/update_all_utxos', methods=['POST'])
 def update_all_utxos():
-    auth = request.headers['Authorization']
+    auth = request.headers['Authorization']  # type: ignore
     if auth is None and auth is not blockchain.secret_key:
         return jsonify({'message': 'sho sho'}), 401
-    blockchain.replace_utxos(request.get_json(force=True, silent=True, cache=False))
+    blockchain.replace_utxos(request.get_json(force=True, silent=True, cache=False))  # type: ignore
     return 'Success', 200
 
 # Get Balance in wallet
 @app.route('/get_wallet', methods=['GET'])
 def get_wallet():
-    if not isValidNode(request.host_url):
+    if not isValidNode(request.host_url):  # type: ignore
         return "Invalid host", 401
     global node_address
     if node_address is None:
-        node_address = crypto.encrypt(urlparse(request.host_url).netloc, blockchain.secret_key)
+        node_address = crypto.encrypt(urlparse(request.host_url).netloc, blockchain.secret_key)  # type: ignore
     return jsonify({'public_id': node_address,'wallet_balance': blockchain.get_wallet_balance(node_address)}), 200
 
 # Running the app
