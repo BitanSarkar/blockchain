@@ -137,3 +137,6 @@ https://www.superdatascience.com/blockchain/
 ## Part 3 - Smart Contract
 1. What is Etherium
     > - It is programmable, basic idea is to store codes in each blocks which would be further decentralized. (Kinda like open source code with security) Decentralized super-computer.
+    >
+    > - Read [What is Etherium](https://coincentral.com/what-is-ethereum-the-ultimate-beginners-guide/)
+2. 
